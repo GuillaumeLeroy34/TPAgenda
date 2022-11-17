@@ -8,17 +8,16 @@ public class Event {
      * The myTitle of this event
      */
     private String myTitle;
-    
+
     /**
      * The starting time of the event
      */
     private LocalDateTime myStart;
 
     /**
-     * The durarion of the event 
+     * The durarion of the event
      */
     private Duration myDuration;
-
 
     /**
      * Constructs an event
@@ -39,11 +38,41 @@ public class Event {
      * @param aDay the day to test
      * @return true if the event occurs on that day, false otherwise
      */
+    public static boolean estAprès(LocalDateTime a, LocalDateTime reference) {
+        if (a.getYear() >= reference.getYear()) {
+            if (a.getMonthValue() >= reference.getMonthValue()) {
+                if (a.getDayOfYear() >= reference.getDayOfYear()) {
+                    return(true);
+                }
+            }
+        }
+        return(false);
+    }
+    
+        public static boolean estAvant(LocalDateTime a, LocalDateTime reference) {
+        if (a.getYear() <= reference.getYear()) {
+            if (a.getMonthValue() <= reference.getMonthValue()) {
+                if (a.getDayOfYear() <= reference.getDayOfYear()) {
+                    return(true);
+                }
+            }
+        }
+        return(false);
+    }
+
     public boolean isInDay(LocalDate aDay) {
         // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        LocalDateTime dateDebut = this.getStart();
+ 
+        LocalDateTime dateFin = dateDebut ; // .plus(this.getDuration());
+        if (estAprès(aDay.atStartOfDay(),dateDebut) && estAvant(aDay.atStartOfDay(),dateFin)) {
+            return (true);
+        } else {
+            return (false);
+        }
+
     }
-   
+
     /**
      * @return the myTitle
      */
@@ -58,7 +87,6 @@ public class Event {
         return myStart;
     }
 
-
     /**
      * @return the myDuration
      */
@@ -66,6 +94,13 @@ public class Event {
         return myDuration;
     }
 
-   
-    
+    @Override
+    public String toString() {
+        return("titre="+this.getTitle());
+    }
 }
+    
+
+    
+
+
